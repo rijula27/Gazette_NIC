@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Creator Dashboard - Gazette Management NIC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background-color: #003367;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .navbar-left .fas {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 500;
+    }
+
+    .wrapper {
+      display: flex;
+      flex: 1;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #003367;
+      color: white;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+    }
+
+    .sidebar nav ul li {
+      margin-bottom: 20px;
+    }
+
+    .sidebar nav ul li a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar nav ul li a:hover {
+      color: #1abc9c;
+    }
+
+    .content {
+      flex: 1;
+      padding: 80px 30px 30px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .sidebar.collapsed + .content {
+      padding-left: 30px;
+    }
+
+    .welcome-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #1abc9c;
+    }
+
+    .footer {
+      background-color: #003367;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.95rem;
+      border-top: solid;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        height: calc(100% - 60px);
+        z-index: 999;
+        width: 250px;
+        background-color: #003367;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+        transform: translateX(0);
+      }
+
+      .sidebar.collapsed {
+        transform: translateX(-100%);
+      }
+
+      .content {
+        padding: 90px 20px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header th:fragment="navbar" class="navbar">
+    <div class="navbar-left">
+      <i class="fas fa-bars" id="menu-toggle"></i>
+      <span class="brand">Gazette Management NIC</span>
+    </div>
+    <div class="navbar-right">
+      <span>Creator Dashboard</span>
+      <i class="fas fa-user-circle"></i>
+    </div>
+  </header>
+
+  <!-- Sidebar + Content Wrapper -->
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <nav>
+        <ul>
+          <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+          <li><a href="#"><i class="fas fa-upload"></i> Upload Gazette</a></li>
+          <li><a href="#"><i class="fas fa-history"></i> Submission History</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+          <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content" id="content">
+      <section class="welcome-box">
+        <h2>Welcome, Creator!</h2>
+        <p>You can manage your gazette submissions and profile from here.</p>
+      </section>
+      <section class="info-cards">
+        <div class="card">
+          <i class="fas fa-file-alt card-icon"></i>
+          <h3>Total Submissions</h3>
+          <p>12</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-check-circle card-icon"></i>
+          <h3>Approved</h3>
+          <p>9</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-clock card-icon"></i>
+          <h3>Pending</h3>
+          <p>3</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Gazette Management NIC. All rights reserved.</p>
+  </footer>
+
+  <!-- Toggle Script -->
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+  </script>
+
+</body>
+</html>
