@@ -1,4 +1,4 @@
-# Use OpenJDK 21 base image
+# Use OpenJDK 21 base image for building the project
 FROM openjdk:21-jdk-slim AS build
 
 # Install Maven
@@ -10,11 +10,11 @@ COPY . .
 # Run Maven build
 RUN mvn clean package -DskipTests
 
-# Use OpenJDK 17 for runtime (or you can use OpenJDK 21 if you need that)
+# Use OpenJDK 21 base image for runtime (or Java 17 if needed)
 FROM openjdk:21-jdk-slim
 
-# Copy the built JAR file from the build stage
-COPY --from=build /target/demo-0.0.1-SNAPSHOT.jar demo.jar
+# Copy the built JAR file from the build stage (correct the JAR file name here)
+COPY --from=build /target/AuthApplication-0.0.1-SNAPSHOT.jar demo.jar
 
 # Expose the application port
 EXPOSE 8080
