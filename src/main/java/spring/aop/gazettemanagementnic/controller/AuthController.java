@@ -45,6 +45,10 @@ public class AuthController {
                                Model model,
                                HttpServletRequest request) {
 
+
+                                System.out.println("Captcha generated: " + captchaInput);
+System.out.println("Session ID: " + session.getId());
+
         // Validate CAPTCHA: retrieve the generated CAPTCHA from the session
         // String sessionCaptcha = (String) session.getAttribute("captcha");
 

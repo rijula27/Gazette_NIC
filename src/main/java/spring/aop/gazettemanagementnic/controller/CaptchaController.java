@@ -21,6 +21,7 @@ public class CaptchaController {
     // Endpoint to generate and serve the CAPTCHA image
     @GetMapping("/captcha-image")
     public void getCaptchaImage(HttpSession session, HttpServletResponse response) throws Exception {
+        System.out.println("enterd here /captcha-image");
         response.setContentType("image/png");
         String captchaText = captchaProducer.createText();
         // Store the CAPTCHA text in the session for later validation
@@ -28,6 +29,9 @@ public class CaptchaController {
         BufferedImage captchaImage = captchaProducer.createImage(captchaText);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(captchaImage, "png", out);
+        System.out.println("Captcha generated: api " + captchaText);
+        System.out.println("Session ID: api " + session.getId());
+
         try {
             out.flush();
         } finally {
